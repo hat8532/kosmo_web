@@ -8,19 +8,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.sun.net.httpserver.Request;
-
 /**
- * Servlet implementation class DepartmentCreateController
+ * Servlet implementation class DepartmentUpdateController
  */
-@WebServlet("/dept/create")
-public class DepartmentCreateController extends HttpServlet {
+@WebServlet("/dept/update")
+public class DepartmentUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DepartmentCreateController() {
+    public DepartmentUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,39 +27,55 @@ public class DepartmentCreateController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/dept/create.jsp");
-		rd.forward(request, response);
+		String id = request.getParameter("departmentId");
+		int n = Integer.parseInt(id);
+		DepartmentDAO departmentDAO = new DepartmentDAO();
+		
+		try {
+			DepartmentDTO departmentDTO = departmentDAO.detail(n);
+			request.setAttribute("dto", departmentDTO);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// foward
+		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/dept/update.jsp");
+		view.forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		System.out.println("=== doPost 진입 성공! ===");
-		String name = request.getParameter("departmentName");
-		String mid = request.getParameter("managerId");
-		String lid = request.getParameter("locationId");
-		
+		// TODO Auto-generated method stub
 		DepartmentDTO departmentDTO = new DepartmentDTO();
-		departmentDTO.setDepartmentName(name);
-		departmentDTO.setManagerId(Integer.parseInt(mid));
-		departmentDTO.setLocationId(Integer.parseInt(lid));
+		int di = Integer.parseInt(request.getParameter("departmentId"));
+		String dn = request.getParameter("departmentName");
+		int mi = Integer.parseInt(request.getParameter("managerId"));
+		int li = Integer.parseInt(request.getParameter("locationId"));
+		
+		departmentDTO.setDepartmentId(di);
+		departmentDTO.setDepartmentName(dn);
+		departmentDTO.setManagerId(mi);
+		departmentDTO.setLocationId(li);
 		
 		DepartmentDAO departmentDAO = new DepartmentDAO();
+		
 		try {
-			int result=departmentDAO.create(departmentDTO);
+			int result = departmentDAO.update(departmentDTO);
 			
 			if(result>0) {
 				response.sendRedirect("./list");
 			}else {
-				RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/dept/list.jsp");
-				view.forward(request, response);
+				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 }

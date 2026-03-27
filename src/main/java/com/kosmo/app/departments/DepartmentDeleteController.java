@@ -1,6 +1,5 @@
 package com.kosmo.app.departments;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,16 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class DepartmentDetailController
+ * Servlet implementation class DepartmentDeleteController
  */
-@WebServlet("/dept/detail")
-public class DepartmentDetailController extends HttpServlet {
+@WebServlet("/dept/delete")
+public class DepartmentDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DepartmentDetailController() {
+    public DepartmentDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,22 +26,23 @@ public class DepartmentDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DepartmentDAO departmentDAO = new DepartmentDAO();
+		// TODO Auto-generated method stub
 		String id = request.getParameter("departmentId");
-		int n = Integer.parseInt(id);
-		
+		DepartmentDTO departmentDTO = new DepartmentDTO();
+		departmentDTO.setDepartmentId(Integer.parseInt(id));
+		DepartmentDAO departmentDAO = new DepartmentDAO();
 		try {
-			DepartmentDTO departmentDTO = departmentDAO.detail(n);
-			request.setAttribute("dto", departmentDTO);
+			int result = departmentDAO.delete(departmentDTO);
+			
+			if(result>0) {
+				response.sendRedirect("./list");
+			}else {
+				response.sendRedirect("detail?departmentId="+id);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/dept/detail.jsp");
-		view.forward(request, response);
-		
 	}
 
 	/**

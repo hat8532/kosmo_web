@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<h1>Index Page DK</h1>
-		<a href="/dept/list">부서관리</a>
-		<a href="/country/list">국가 관리</a>
+		<a href="dept/list">부서관리</a>
+		<a href="country/list">국가 관리</a>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-package com.kosmo.app.departments;
+package com.kosmo.app.countries;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -8,19 +8,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.sun.net.httpserver.Request;
+import com.kosmo.app.departments.DepartmentDAO;
+import com.kosmo.app.departments.DepartmentDTO;
 
 /**
- * Servlet implementation class DepartmentCreateController
+ * Servlet implementation class CountryCreateController
  */
-@WebServlet("/dept/create")
-public class DepartmentCreateController extends HttpServlet {
+@WebServlet("/country/create")
+public class CountryCreateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DepartmentCreateController() {
+    public CountryCreateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +31,7 @@ public class DepartmentCreateController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/dept/create.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/country/create.jsp");
 		rd.forward(request, response);
 	}
 
@@ -38,15 +39,15 @@ public class DepartmentCreateController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		System.out.println("=== doPost 진입 성공! ===");
-		String name = request.getParameter("departmentName");
-		String mid = request.getParameter("managerId");
-		String lid = request.getParameter("locationId");
+		// TODO Auto-generated method stub
+		String cid = request.getParameter("countryId");
+		String cn = request.getParameter("countryName");
+		String rid = request.getParameter("regionId");
 		
 		DepartmentDTO departmentDTO = new DepartmentDTO();
-		departmentDTO.setDepartmentName(name);
-		departmentDTO.setManagerId(Integer.parseInt(mid));
-		departmentDTO.setLocationId(Integer.parseInt(lid));
+		departmentDTO.setDepartmentName(cid);
+		departmentDTO.setManagerId(Integer.parseInt(cn));
+		departmentDTO.setLocationId(Integer.parseInt(rid));
 		
 		DepartmentDAO departmentDAO = new DepartmentDAO();
 		try {
@@ -55,7 +56,7 @@ public class DepartmentCreateController extends HttpServlet {
 			if(result>0) {
 				response.sendRedirect("./list");
 			}else {
-				RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/dept/list.jsp");
+				RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/country/list.jsp");
 				view.forward(request, response);
 			}
 		} catch (Exception e) {

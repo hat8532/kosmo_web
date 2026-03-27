@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,22 +7,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>부서 등록 페이지</h3>
+	<h3>부서 정보 수정</h3>
 	
-	<form action="./create" method="post">
+	<form action="./update" method="post">
+	<input type="hidden" name ="departmentId" value="${dto.departmentId}">
 		<div>
 			<label>부서명</label>
 			<!-- DTO의 setter의 이름과 동일하게 -->
-			<input type="text" name="departmentName">
+			<input type="text" value="${dto.departmentName}"  name="departmentName">
 		</div>
 		<div>
 			<label>관리자코드</label>
-			<input type="text" name="managerId">
+			<input type="text" value="${dto.managerId}" name="managerId">
 		</div>
 		
 		<div>
 			<label>지역코드</label>
-			<input type="text" name="locationId">
+			<input type="text" value="${dto.locationId}" name="locationId">
 		</div>
 		<button type="submit">button</button>
 		<input type="submit" value="create">		
@@ -30,6 +31,5 @@
 		<input type="reset" value="reset">
 	
 	</form>
-	
 </body>
 </html>
