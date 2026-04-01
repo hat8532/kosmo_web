@@ -1,25 +1,25 @@
-package com.kosmo.app.departments;
+package com.kosmo.app.employees;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpSession;
 
+import java.io.IOException;
 
 /**
- * Servlet implementation class IndexController
+ * Servlet implementation class EmployeeLogoutController
  */
-@WebServlet("/index")
-public class IndexController extends HttpServlet {
+@WebServlet("/emp/logout")
+public class EmployeeLogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IndexController() {
+    public EmployeeLogoutController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +28,10 @@ public class IndexController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
-        view.forward(request, response);
+		HttpSession session = request.getSession();
+		//session 유지 시간을 0으로 세팅
+		session.invalidate();
+		response.sendRedirect("/home");
 	}
 
 	/**

@@ -28,9 +28,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${list}" var="d">
+				<c:forEach items="${requestScope.list}" var="d">
 					<tr>
-						<td>${d.departmentId}</td>
+						<td>${pageScope.d.departmentId}</td>
 						<td><a href="./detail?departmentId=${d.departmentId}">${d.departmentName}</a></td>
 					</tr>
 					<!-- 
